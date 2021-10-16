@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "768103334869",
+    "firebase_url": "https://basic-chat-application-4d671-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "basic-chat-application-4d671",
+    "storage_bucket": "basic-chat-application-4d671.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768103334869:android:0c17501989db0960a5f35c",
+        "android_client_info": {
+          "package_name": "com.example.basicchatapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768103334869-h9h3j0obp6cnuco7tkhr8uov8mdpqn7c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDroyJZzWelG_-i_U4ig1D0z4bTTbc4Xl4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768103334869-h9h3j0obp6cnuco7tkhr8uov8mdpqn7c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
