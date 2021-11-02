@@ -24,6 +24,8 @@ class SignUp : AppCompatActivity() {
         _binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.hide()
+
         mAuth = FirebaseAuth.getInstance()
 
         binding.signupbutton.setOnClickListener {
@@ -59,7 +61,8 @@ class SignUp : AppCompatActivity() {
 
     private fun addUserToDB(name: String, email: String, uid: String?) {
 
-        dbReference = FirebaseDatabase.getInstance("https://basic-chat-application-4d671-default-rtdb.asia-southeast1.firebasedatabase.app").getReference()
+        dbReference = FirebaseDatabase.getInstance("https://basic-chat-application-4d671-default-rtdb.asia-southeast1.firebasedatabase.app")
+            .getReference()
         dbReference.child("user").child(uid!!).setValue(User(name,email,uid))
 
     }

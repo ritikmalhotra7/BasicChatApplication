@@ -3,4 +3,8 @@
     <item android:id="@+id/logout"
         android:title="Log out"
         />
+    <item android:id="@+id/setting"
+        android:title="Settings"/>
+    <item android:id="@+id/wallpaper"
+        android:title="Wallpaper"/>
 </menu>

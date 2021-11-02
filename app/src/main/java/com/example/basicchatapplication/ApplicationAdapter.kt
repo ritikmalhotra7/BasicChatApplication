@@ -15,7 +15,7 @@ class ApplicationAdapter (val context : Context, val userList : ArrayList<User>)
 
     class ViewHolder(private val binding: UserLayoutBinding/*view:View*/) : RecyclerView.ViewHolder(binding.root) {
         val textName = binding.name
-        val email = binding.emailid
+        /*val email = binding.emailid*/
         val v = binding.root
         /*val textName = view.findViewById<TextView>(R.id.name)
         val emailid = view.findViewById<TextView>(R.id.emailid)*/
@@ -35,7 +35,7 @@ class ApplicationAdapter (val context : Context, val userList : ArrayList<User>)
         holder.email.text = currentUser.email*/
         val currentUser = userList[position]
         holder.textName.text = currentUser.name
-        holder.email.text = currentUser.email
+        /*holder.email.text = currentUser.email*/
 
         holder.v.setOnClickListener {
             val intent = Intent(context,ActivityChat::class.java)

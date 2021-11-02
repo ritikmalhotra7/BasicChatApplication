@@ -1,8 +1,14 @@
 package com.example.basicchatapplication
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.basicchatapplication.databinding.ActivityChatBinding
 import com.example.basicchatapplication.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +23,8 @@ class ActivityChat : AppCompatActivity() {
 
     var senderRoom : String? = null
     var recieverRoom : String?= null
+
+  /*  var last : Int? = null*/
 
     private lateinit var dbRefrence : DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +44,21 @@ class ActivityChat : AppCompatActivity() {
         recieverRoom = senderUid + recieverUid
 
         supportActionBar?.title = name
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
         messageList = ArrayList()
         mAdapter = MessageAdapter(this,messageList)
         binding.recyclerView.adapter = mAdapter
-
+  /*      binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                last = (binding.recyclerView.layoutManager as LinearLayoutManager).getPosition((binding.recyclerView.layoutManager as LinearLayoutManager).findViewByPosition(0)!!)
+            }
+        })
+*/
         dbRefrence.child("chats").child(senderRoom.toString()).child("messages").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 messageList.clear()
@@ -63,14 +80,37 @@ class ActivityChat : AppCompatActivity() {
             val message = binding.messageBox.text.toString()
             val messageObject = Message(message,senderUid)
 
-            dbRefrence.child("chats").child(senderRoom.toString()).child("messages").push()
-                .setValue(messageObject).addOnSuccessListener {
-                    dbRefrence.child("chats").child(recieverRoom.toString()).child("messages").push()
-                        .setValue(messageObject)
-                }
-            binding.messageBox.setText("")
+            if(message.toString().length>0) {
+                dbRefrence.child("chats").child(senderRoom.toString()).child("messages").push()
+                    .setValue(messageObject).addOnSuccessListener {
+                        dbRefrence.child("chats").child(recieverRoom.toString()).child("messages").push()
+                            .setValue(messageObject)
+                    }
+                binding.messageBox.setText("")
+            }else{
+                Toast.makeText(applicationContext, "Please enter some message! ", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+/*
+    override fun onDestroy() {
+        super.onDestroy()
+        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putInt("last", last!!)
+            apply()
+        }
+    }*/
 }
