@@ -1,20 +1,14 @@
 package com.example.basicchatapplication
 
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.basicchatapplication.databinding.ActivityChatBinding
-import com.example.basicchatapplication.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class ActivityChat : AppCompatActivity() {
+class ActivityChat : Activity() {
     private var _binding : ActivityChatBinding? = null
     private val binding get() = _binding!!
 
@@ -43,9 +37,8 @@ class ActivityChat : AppCompatActivity() {
         senderRoom = recieverUid + senderUid
         recieverRoom = senderUid + recieverUid
 
-        supportActionBar?.title = name
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        actionBar?.title = name
+
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -95,10 +88,10 @@ class ActivityChat : AppCompatActivity() {
 
     }
 
-    override fun onSupportNavigateUp(): Boolean {
+   /* override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
-    }
+    }*/
 
     override fun onBackPressed() {
         super.onBackPressed()
