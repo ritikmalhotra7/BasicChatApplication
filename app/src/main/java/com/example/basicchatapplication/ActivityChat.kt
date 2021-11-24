@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.basicchatapplication.databinding.ActivityChatBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -17,14 +18,28 @@ class ActivityChat : Activity() {
 
     var senderRoom : String? = null
     var recieverRoom : String?= null
+    var lastPosition : Int? = null
+
+    val lastp = "last"
+
+
 
   /*  var last : Int? = null*/
 
     private lateinit var dbRefrence : DatabaseReference
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        /*SharedPreferences getPrefs= PreferenceManager.getDefaultSharedPreferences (getBaseContext());
+        lastPosition = getPrefs.getInt( s: "lastPos", : 0);
+        recyclerView. scrollToPosition (lastPosition);*/
+
+
+
 
         dbRefrence =  FirebaseDatabase
             .getInstance("https://basic-chat-application-4d671-default-rtdb.asia-southeast1.firebasedatabase.app")
@@ -39,19 +54,14 @@ class ActivityChat : Activity() {
 
         actionBar?.title = name
 
-
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        val ll = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = ll
 
         messageList = ArrayList()
         mAdapter = MessageAdapter(this,messageList)
         binding.recyclerView.adapter = mAdapter
-  /*      binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                last = (binding.recyclerView.layoutManager as LinearLayoutManager).getPosition((binding.recyclerView.layoutManager as LinearLayoutManager).findViewByPosition(0)!!)
-            }
-        })
-*/
+
+
         dbRefrence.child("chats").child(senderRoom.toString()).child("messages").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 messageList.clear()
@@ -69,6 +79,7 @@ class ActivityChat : Activity() {
 
         })
 
+
         binding.send.setOnClickListener {
             val message = binding.messageBox.text.toString()
             val messageObject = Message(message,senderUid)
@@ -84,6 +95,9 @@ class ActivityChat : Activity() {
                 Toast.makeText(applicationContext, "Please enter some message! ", Toast.LENGTH_SHORT).show()
             }
         }
+        binding.recyclerView.scrollToPosition(messageList.size)
+        Snackbar.make(binding.relative, messageList.size.toString(), Snackbar.LENGTH_LONG)
+            .show()
 
 
     }
@@ -97,13 +111,15 @@ class ActivityChat : Activity() {
         super.onBackPressed()
         finish()
     }
-/*
-    override fun onDestroy() {
+    /*override fun onDestroy() {
         super.onDestroy()
         val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
         with (sharedPref.edit()) {
-            putInt("last", last!!)
+            putInt(lastp, lastPosition!!)
             apply()
-        }
+        }*//*SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences.Editor e = getPrefs.edit();
+        e.putInt("lastPos", lastPosition);
+        e.apply();*//*
     }*/
 }

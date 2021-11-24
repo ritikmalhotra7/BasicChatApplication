@@ -37,6 +37,10 @@ class Login : AppCompatActivity() {
 
             login(email,password)
         }
+        binding.loginPhone.setOnClickListener {
+            startActivity(Intent(this,Phone_verification::class.java))
+            finish()
+        }
     }
 
     private fun login(email: String, password: String) {

@@ -35,6 +35,7 @@
             android:layout_weight="100"
             android:background="@drawable/edit_bg"
             android:paddingLeft="12dp"
+            android:singleLine="true"
             android:hint="Type a Message"
             />
         <ImageView
