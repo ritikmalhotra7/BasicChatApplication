@@ -2,6 +2,7 @@ package com.example.basicchatapplication
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.basicchatapplication.databinding.ActivityChatBinding
@@ -70,7 +71,7 @@ class ActivityChat : Activity() {
                     /*messageList[position]*/
                     messageList.add(message!!)
                 }
-                mAdapter.notifyDataSetChanged()
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -82,9 +83,10 @@ class ActivityChat : Activity() {
 
         binding.send.setOnClickListener {
             val message = binding.messageBox.text.toString()
+            Log.d("taget",message)
             val messageObject = Message(message,senderUid)
 
-            if(message.toString().length>0) {
+            if(message.isNotEmpty()) {
                 dbRefrence.child("chats").child(senderRoom.toString()).child("messages").push()
                     .setValue(messageObject).addOnSuccessListener {
                         dbRefrence.child("chats").child(recieverRoom.toString()).child("messages").push()
@@ -95,9 +97,6 @@ class ActivityChat : Activity() {
                 Toast.makeText(applicationContext, "Please enter some message! ", Toast.LENGTH_SHORT).show()
             }
         }
-        binding.recyclerView.scrollToPosition(messageList.size)
-        Snackbar.make(binding.relative, messageList.size.toString(), Snackbar.LENGTH_LONG)
-            .show()
 
 
     }
