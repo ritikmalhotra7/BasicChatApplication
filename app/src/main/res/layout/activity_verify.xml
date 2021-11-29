@@ -7,13 +7,7 @@
     tools:context=".Verify"
     android:orientation="vertical"
     android:weightSum="2">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center|bottom"
-        android:layout_weight="1">
 
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -33,10 +27,18 @@
             tools:ignore="RtlSymmetry" />
 
         <EditText
+            android:id="@+id/name"
+            android:layout_width="207dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Enter you Name"
+            />
+        <EditText
             android:id="@+id/id_otp"
             android:layout_width="207dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:hint="Enter otp"
             />
 
         <Button

@@ -71,9 +71,11 @@ class Phone_verification : AppCompatActivity() {
                 Log.d("TAG", "onCodeSent:$verificationId")
                 storedVerificationId = verificationId
                 resendToken = token
-
+                val mobileNumber = findViewById<EditText>(R.id.phoneNumber)
+                var number = mobileNumber.text.toString().trim()
                 val intent = Intent(applicationContext, Verify::class.java)
                 intent.putExtra("storedVerificationId", storedVerificationId)
+                intent.putExtra("phone_number", number)
                 startActivity(intent)
             }
         }
@@ -87,6 +89,7 @@ class Phone_verification : AppCompatActivity() {
         if (number.isNotEmpty()) {
             number = "+91$number"
             sendVerificationCode(number)
+
         } else {
             Toast.makeText(this, "Enter mobile number", Toast.LENGTH_SHORT).show()
         }

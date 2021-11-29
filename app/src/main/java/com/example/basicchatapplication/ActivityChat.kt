@@ -53,10 +53,7 @@ class ActivityChat : Activity() {
         senderRoom = recieverUid + senderUid
         recieverRoom = senderUid + recieverUid
 
-        actionBar?.title = name
-
-        val ll = LinearLayoutManager(this)
-        binding.recyclerView.layoutManager = ll
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         messageList = ArrayList()
         mAdapter = MessageAdapter(this,messageList)
